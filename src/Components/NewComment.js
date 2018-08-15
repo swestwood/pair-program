@@ -31,8 +31,8 @@ class NewComment extends Component {
 
         await createComment({
             ...comment,
-            eventId,
             createdAt: moment.utc().format(),
+            eventId,
         });
 
         this.setState(NewComment.defaultState);
@@ -85,8 +85,8 @@ const NewCommentWithData = graphql(
         props: props => ({
             createComment: (comment) => {
                 return props.mutate({
-                    variables: { ...comment },
                     optimisticResponse: { commentOnEvent: { ...comment, __typename: 'Comment', commentId: uuid() } },
+                    variables: { ...comment },
                 });
             }
         })

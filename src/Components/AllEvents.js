@@ -8,14 +8,13 @@ import MutationDeleteEvent from "../GraphQL/MutationDeleteEvent";
 import moment from "moment";
 
 class AllEvents extends Component {
-
     state = {
         busy: false,
     }
 
     static defaultProps = {
-        events: [],
         deleteEvent: () => null,
+        events: [],
     }
 
     async handleDeleteClick(event, e) {
@@ -35,8 +34,8 @@ class AllEvents extends Component {
         this.setState({ busy: true });
 
         await client.query({
-            query,
             fetchPolicy: 'network-only',
+            query,
         });
 
         this.setState({ busy: false });
@@ -121,12 +120,12 @@ export default withApollo(compose(
             props: (props) => ({
                 deleteEvent: (event) => {
                     return props.mutate({
-                        variables: { id: event.id },
                         optimisticResponse: () => ({
                             deleteEvent: {
                                 ...event, __typename: 'Event', comments: { __typename: 'CommentConnection', items: [] }
                             }
                         }),
+                        variables: { id: event.id },
                     });
                 }
             })

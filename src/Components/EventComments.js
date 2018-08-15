@@ -63,9 +63,6 @@ const EventCommentsWithData = graphql(
             comments: props.data.getEvent ? props.data.getEvent.comments : { items: [] },
             subscribeToComments: () => props.data.subscribeToMore({
                 document: SubsriptionEventComments,
-                variables: {
-                    eventId: props.ownProps.eventId,
-                },
                 updateQuery: (prev, { subscriptionData: { data: { subscribeToEventComments } } }) => {
                     const res = {
                         ...prev,
@@ -84,7 +81,10 @@ const EventCommentsWithData = graphql(
 
                     return res;
                 }
-            })
+            }),
+            variables: {
+                eventId: props.ownProps.eventId,
+            },
         }),
     },
 )(EventComments);

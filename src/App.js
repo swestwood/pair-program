@@ -30,11 +30,9 @@ const App = () => (
 );
 
 const client = new AWSAppSyncClient({
-  url: appSyncConfig.graphqlEndpoint,
-  region: appSyncConfig.region,
   auth: {
-    type: appSyncConfig.authenticationType,
     apiKey: appSyncConfig.apiKey,
+    type: appSyncConfig.authenticationType,
   },
   cacheOptions: {
     dataIdFromObject: (obj) => {
@@ -52,7 +50,9 @@ const client = new AWSAppSyncClient({
 
       return id;
     }
-  }
+  },
+  region: appSyncConfig.region,
+  url: appSyncConfig.graphqlEndpoint,
 });
 
 const WithProvider = () => (
